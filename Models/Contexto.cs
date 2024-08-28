@@ -7,7 +7,7 @@ namespace ADSAlunos2024.Models
         public Contexto(DbContextOptions<Contexto> options) : base(options) { }
 
         public DbSet<Curso> Cursos { get; set; }
-sdfasdsafdasd
+
 
     }
 }
