@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ADSAlunos2024.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240823235633_inicial")]
+    [Migration("20240828005734_inicial")]
     partial class inicial
     {
         /// <inheritdoc />
