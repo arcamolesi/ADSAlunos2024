@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ADSAlunos2024.Models
 {
+    public enum Periodo { Manha, Tarde, Noite };
     [Table("Alunos")]
     public class Aluno
     {   
-        public enum Periodo { Manha, Tarde, Noite};
-
+       
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name ="ID: ")]
