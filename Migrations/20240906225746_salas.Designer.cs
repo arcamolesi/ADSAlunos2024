@@ -4,6 +4,7 @@ using ADSAlunos2024.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ADSAlunos2024.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20240906225746_salas")]
+    partial class salas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,32 +54,6 @@ namespace ADSAlunos2024.Migrations
                     b.ToTable("Alunos");
                 });
 
-            modelBuilder.Entity("ADSAlunos2024.Models.Atendimento", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("alunoID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("salaID")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("alunoID");
-
-                    b.HasIndex("salaID");
-
-                    b.ToTable("Atendimentos");
-                });
-
             modelBuilder.Entity("ADSAlunos2024.Models.Curso", b =>
                 {
                     b.Property<int>("id")
@@ -94,31 +71,6 @@ namespace ADSAlunos2024.Migrations
                     b.ToTable("Cursos");
                 });
 
-            modelBuilder.Entity("ADSAlunos2024.Models.Sala", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("descricao")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
-
-                    b.Property<int>("equipamento")
-                        .HasColumnType("int");
-
-                    b.Property<string>("situacao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Salas");
-                });
-
             modelBuilder.Entity("ADSAlunos2024.Models.Aluno", b =>
                 {
                     b.HasOne("ADSAlunos2024.Models.Curso", "curso")
@@ -128,25 +80,6 @@ namespace ADSAlunos2024.Migrations
                         .IsRequired();
 
                     b.Navigation("curso");
-                });
-
-            modelBuilder.Entity("ADSAlunos2024.Models.Atendimento", b =>
-                {
-                    b.HasOne("ADSAlunos2024.Models.Aluno", "aluno")
-                        .WithMany()
-                        .HasForeignKey("alunoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ADSAlunos2024.Models.Sala", "sala")
-                        .WithMany()
-                        .HasForeignKey("salaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("aluno");
-
-                    b.Navigation("sala");
                 });
 #pragma warning restore 612, 618
         }
