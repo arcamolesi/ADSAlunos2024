@@ -6,8 +6,7 @@ namespace ADSAlunos2024.Models
     public enum Periodo { Manha, Tarde, Noite };
     [Table("Alunos")]
     public class Aluno
-    {   
-       
+    {          
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name ="ID: ")]
@@ -23,6 +22,7 @@ namespace ADSAlunos2024.Models
 
         [Display(Name ="Curso: ")]
         public Curso curso { get; set; }
+
         [Display(Name = "Curso: ")]
         public  int cursoID { get; set; }
 
