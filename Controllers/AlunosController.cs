@@ -22,7 +22,6 @@ namespace ADSAlunos2024.Controllers
         public async Task<IActionResult> Index()
         {
            
-
             var contexto = _context.Alunos.Include(a => a.curso);
             return View(await contexto.ToListAsync());
         }
@@ -56,8 +55,8 @@ namespace ADSAlunos2024.Controllers
                                    Value = e.ToString(),
                                    Text = e.ToString()
                                });
-
             ViewBag.tPeriodo= tPeriodo;
+           
             ViewData["cursoID"] = new SelectList(_context.Cursos, "id", "descricao");
             return View();
         }
@@ -92,7 +91,17 @@ namespace ADSAlunos2024.Controllers
             {
                 return NotFound();
             }
-            ViewData["cursoID"] = new SelectList(_context.Cursos, "id", "id", aluno.cursoID);
+
+            var tPeriodo = Enum.GetValues(typeof(Periodo))
+                   .Cast<Periodo>()
+                   .Select(e => new SelectListItem
+                   {
+                       Value = e.ToString(),
+                       Text = e.ToString()
+                   });
+            ViewBag.tPeriodo = tPeriodo;
+
+            ViewData["listaCursos"] = new SelectList(_context.Cursos, "id", "descricao", aluno.cursoID);
             return View(aluno);
         }
 
