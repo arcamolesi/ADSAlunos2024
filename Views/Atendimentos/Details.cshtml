@@ -32,6 +32,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <form asp-action="CancelaReserva">
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="Cancela Reserva" class="btn btn-primary" /> |
+        <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>

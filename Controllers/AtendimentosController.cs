@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ADSAlunos2024.Models;
+using ADSAlunos2024.Migrations;
 
 namespace ADSAlunos2024.Controllers
 {
@@ -21,7 +22,7 @@ namespace ADSAlunos2024.Controllers
         // GET: Atendimentos
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.Atendimentos.Include(a => a.aluno).Include(a => a.sala);
+            var contexto = _context.Atendimentos.Include(a => a.aluno).Include(b => b.sala).Include(c => c.aluno.curso);
             return View(await contexto.ToListAsync());
         }
 
@@ -35,7 +36,8 @@ namespace ADSAlunos2024.Controllers
 
             var atendimento = await _context.Atendimentos
                 .Include(a => a.aluno)
-                .Include(a => a.sala)
+                .Include(b => b.sala)
+                .Include(c => c.aluno.curso)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (atendimento == null)
             {
@@ -49,7 +51,7 @@ namespace ADSAlunos2024.Controllers
         public IActionResult Create()
         {
             ViewData["alunoID"] = new SelectList(_context.Alunos, "id", "nome");
-            ViewData["salaID"] = new SelectList(_context.Salas, "id", "descricao");
+            ViewData["salaID"] = new SelectList(_context.Salas.Where(s => s.situacao == 'L'), "id", "descricao");
             return View();
         }
 
@@ -63,11 +65,17 @@ namespace ADSAlunos2024.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(atendimento);
+                Sala sala = await _context.Salas.FindAsync(atendimento.salaID);
+                sala.situacao = 'R';
+                sala.equipamento = sala.equipamento - 5;
+
+                atendimento.tipo = 'R'; 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            // ViewData["alunoID"] = new SelectList(_context.Alunos, "id", "nome", atendimento.alunoID);
             ViewData["alunoID"] = new SelectList(_context.Alunos, "id", "nome", atendimento.alunoID);
-            ViewData["salaID"] = new SelectList(_context.Salas, "id", "descricao", atendimento.salaID);
+            ViewData["salaID"] = new SelectList(_context.Salas.ToList().Where(s => s.situacao == 'L'), "id", "descricao", atendimento.salaID);
             return View(atendimento);
         }
 
@@ -145,6 +153,41 @@ namespace ADSAlunos2024.Controllers
 
             return View(atendimento);
         }
+
+
+        //Cancelamento de Reserva
+        [HttpPost]
+        public async Task<IActionResult> CancelaReserva(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var atendimento = await _context.Atendimentos
+                .Include(a => a.aluno)
+                .Include(a => a.sala)
+                .FirstOrDefaultAsync(m => m.id == id);
+            if (atendimento == null)
+            {
+                return NotFound();
+            }
+            if (atendimento.tipo == 'R')
+            {
+                Sala sala = await _context.Salas.FindAsync(atendimento.salaID);
+                sala.situacao = 'L';
+                sala.equipamento = sala.equipamento + 5;
+
+                atendimento.tipo = 'C';
+                atendimento.data = DateTime.Now; 
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
 
         // POST: Atendimentos/Delete/5
         [HttpPost, ActionName("Delete")]

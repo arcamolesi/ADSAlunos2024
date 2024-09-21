@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ADSAlunos2024.Models.Aluno>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index de Alunos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.aniversario)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.curso)
+                @Html.DisplayNameFor(model => model.curso.id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.periodo)
@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.aniversario)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.curso.id)
+                @Html.DisplayFor(modelItem => item.curso.descricao)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.periodo)

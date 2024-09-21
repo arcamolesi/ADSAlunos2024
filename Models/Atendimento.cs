@@ -22,5 +22,9 @@ namespace ADSAlunos2024.Models
 
         [Display(Name = "Data: " )]
         public DateTime data { get; set; }
+
+        [Display(Name = "Tipo Atendimento: ")]
+        public char tipo { get; set; }
+
     }
 }
