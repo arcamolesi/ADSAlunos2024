@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ADSAlunos2024.Models.Aluno>
+
+@{
+    ViewData["Title"] = "Alunos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Alunos gerados automaticamente</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.aniversario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.curso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.periodo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aniversario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.curso.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.periodo)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

@@ -12,7 +12,7 @@ namespace ADSAlunos2024.Models
         [Display(Name = "Aluno: ")]
         [StringLength(35)]
         public Aluno aluno { get; set; }
-        [Display(Name = "Aluno: ")]
+       
         public int alunoID { get; set; }
 
         [Display(Name = "Sala: " )]

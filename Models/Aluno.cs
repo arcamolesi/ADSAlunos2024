@@ -6,7 +6,7 @@ namespace ADSAlunos2024.Models
     public enum Periodo { Manha, Tarde, Noite };
     [Table("Alunos")]
     public class Aluno
-    {          
+    {         
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name ="ID: ")]
