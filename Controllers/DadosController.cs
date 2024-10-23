@@ -48,7 +48,7 @@ namespace ADSAlunos2024.Controllers
             contexto.Database.ExecuteSqlRaw("delete from Atendimentos");
             contexto.Database.ExecuteSqlRaw("DBCC CHECKIDENT('Atendimentos', RESEED, 0)");
             Random rand = new Random();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 Atendimento atendimento = new Atendimento();
                 atendimento.alunoID = rand.Next(1, 101);
