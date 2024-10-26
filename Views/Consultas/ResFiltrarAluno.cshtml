@@ -29,6 +29,11 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            int cont = 0;
+            int soma = 0; 
+         }
+
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -45,6 +50,12 @@
             </td>
 
         </tr>
+        soma = soma + item.curso.id; 
+        cont++; 
 }
     </tbody>
 </table>
+
+<h3>Total de registros impressos: @cont</h3>
+
+<h3>Total de soma de id de registro: @soma</h3>
